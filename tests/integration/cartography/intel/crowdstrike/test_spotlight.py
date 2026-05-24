@@ -75,8 +75,32 @@ def test_sync_spotlight_vulnerabilities(
     }
 
     # Verify CVE nodes
-    assert check_nodes(neo4j_session, "CVE", ["id", "base_score"]) == {
-        ("CVE-2019-5094", 6.7),
+    assert check_nodes(
+        neo4j_session,
+        "CVE",
+        [
+            "id",
+            "base_score",
+            "base_severity",
+            "description",
+            "published_date",
+            "vector_string",
+            "exploit_status",
+            "exploitability_score",
+            "impact_score",
+        ],
+    ) == {
+        (
+            "CVE-2019-5094",
+            6.7,
+            "MEDIUM",
+            "An exploitable code execution...",
+            "2019-09-24T22:15:00Z",
+            "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+            30,
+            0.8,
+            5.9,
+        ),
     }
 
     # Verify CrowdstrikeHost -[:HAS_VULNERABILITY]-> SpotlightVulnerability

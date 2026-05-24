@@ -276,13 +276,21 @@ def transform(raw_cves: list[dict[str, Any]]) -> list[dict[str, Any]]:
             "updated_at": cve.get("updated_at"),
             "codename": cve.get("codename"),
             "mitigation": cve.get("mitigation"),
+            "references": cve.get("references"),
+            "weaknesses": cve.get("weaknesses"),
+            "vector_string": cvss_v3.get("vectorString"),
             "attack_vector": cvss_v3.get("attackVector"),
             "attack_complexity": cvss_v3.get("attackComplexity"),
+            "privileges_required": cvss_v3.get("privilegesRequired"),
+            "user_interaction": cvss_v3.get("userInteraction"),
+            "scope": cvss_v3.get("scope"),
             "base_score": cvss_v3.get("baseScore"),
             "base_severity": cvss_v3.get("baseSeverity"),
             "confidentiality_impact": cvss_v3.get("confidentialityImpact"),
             "integrity_impact": cvss_v3.get("integrityImpact"),
             "availability_impact": cvss_v3.get("availabilityImpact"),
+            "exploitability_score": base_metric_v3.get("exploitabilityScore"),
+            "impact_score": base_metric_v3.get("impactScore"),
         }
         result.append(transformed)
     return result

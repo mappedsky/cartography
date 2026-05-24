@@ -56,13 +56,26 @@ def test_sync_ubuntu_cves(mock_api, neo4j_session):
 
     record = neo4j_session.run(
         "MATCH (n:UbuntuCVE {id: 'USV|CVE-2024-1234'}) "
-        "RETURN n.cve_id, n.attack_vector, n.attack_complexity, n.base_score, n.base_severity",
+        "RETURN n.cve_id, n.attack_vector, n.attack_complexity, "
+        "n.privileges_required, n.user_interaction, n.scope, "
+        "n.base_score, n.base_severity, n.vector_string, "
+        "n.published_date, n.last_modified_date, n.vuln_status, "
+        "n.exploitability_score, n.impact_score",
     ).single()
     assert record["n.cve_id"] == "CVE-2024-1234"
     assert record["n.attack_vector"] == "NETWORK"
     assert record["n.attack_complexity"] == "LOW"
+    assert record["n.privileges_required"] == "NONE"
+    assert record["n.user_interaction"] == "REQUIRED"
+    assert record["n.scope"] == "UNCHANGED"
     assert record["n.base_score"] == 8.1
     assert record["n.base_severity"] == "HIGH"
+    assert record["n.vector_string"] == "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N"
+    assert record["n.published_date"] == "2024-01-15T10:30:00"
+    assert record["n.last_modified_date"] == "2024-02-01T14:22:00"
+    assert record["n.vuln_status"] == "active"
+    assert record["n.exploitability_score"] == 2.8
+    assert record["n.impact_score"] == 5.2
 
     record = neo4j_session.run(
         "MATCH (n:UbuntuCVE {id: 'USV|CVE-2024-9999'}) RETURN n.attack_vector, n.base_score",

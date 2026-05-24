@@ -93,9 +93,15 @@ class CrowdstrikeCVENodeProperties(CartographyNodeProperties):
     id: PropertyRef = PropertyRef("id")
     cve_id: PropertyRef = PropertyRef("id", extra_index=True)
     lastupdated: PropertyRef = PropertyRef("lastupdated", set_in_kwargs=True)
+    description: PropertyRef = PropertyRef("description")
+    references: PropertyRef = PropertyRef("references")
+    vector_string: PropertyRef = PropertyRef("vector")
     base_score: PropertyRef = PropertyRef("base_score")
     base_severity: PropertyRef = PropertyRef("severity")
-    exploitability_score: PropertyRef = PropertyRef("exploit_status")
+    published_date: PropertyRef = PropertyRef("published_date")
+    exploit_status: PropertyRef = PropertyRef("exploit_status")
+    exploitability_score: PropertyRef = PropertyRef("exploitability_score")
+    impact_score: PropertyRef = PropertyRef("impact_score")
 
 
 # (:SpotlightVulnerability)-[:HAS_CVE]->(:CVE)

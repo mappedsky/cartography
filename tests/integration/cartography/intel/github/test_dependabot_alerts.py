@@ -158,16 +158,49 @@ def test_sync_github_dependabot_alerts(mock_get, neo4j_session):
         (
             "https://github.com/simpsoncorp/sample_repo/security/dependabot/1",
             "CVE-2018-6188",
+            7.5,
+            "high",
+            "Django allows remote attackers to obtain information.",
+            "2018-10-03T21:13:54Z",
+            "2022-04-26T18:35:37Z",
+            "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
         ),
         (
             "https://github.com/simpsoncorp/sample_repo/security/dependabot/2",
             "CVE-2019-10744",
+            9.8,
+            "critical",
+            "Prototype pollution in lodash.",
+            None,
+            None,
+            "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
         ),
         (
             "https://github.com/simpsoncorp/SampleRepo2/security/dependabot/3",
             "CVE-2021-20191",
+            None,
+            "medium",
+            "Sensitive information may be logged.",
+            None,
+            None,
+            None,
         ),
-    }.issubset(check_nodes(neo4j_session, "CVE", ["id", "cve_id"]))
+    }.issubset(
+        check_nodes(
+            neo4j_session,
+            "CVE",
+            [
+                "id",
+                "cve_id",
+                "base_score",
+                "base_severity",
+                "description",
+                "published_date",
+                "last_modified_date",
+                "vector_string",
+            ],
+        )
+    )
     assert set(get_cve_ids_from_graph(neo4j_session)).issuperset(
         {
             "CVE-2018-6188",
